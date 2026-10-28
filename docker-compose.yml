@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  ghosthand:
+    build: .
+    container_name: ghosthand
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    volumes:
+      - ./data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

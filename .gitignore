@@ -1,0 +1,16 @@
+# Environments & Bytecode
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Dynamic upload & page run data
+data/uploads/
+data/pages/
+results/*.json
+!results/summary.md

@@ -1,0 +1,6 @@
+OS: macOS 26.6.1 (Build 25G76)
+Hardware: Apple M2 (arm64), 16 GB Unified Memory (17179869184 bytes), 256 GB SSD (fanless)
+Python: 3.12.0
+Ollama Client Version: 0.40.11
+Language Scope: English & Spanish (Día de los Muertos / pan de muerto theme)
+Primary Model Tag: gemma4:e4b (9.5 GB)

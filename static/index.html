@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost Hand - Casa de la Memoria</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Ambient Night Altar Canvas & Candles -->
+  <canvas id="petals-canvas"></canvas>
+  <div id="candles-container"></div>
+
+  <!-- Swaying Papel Picado Banners -->
+  <div class="papel-picado-header">
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+    <div class="papel-flag"></div>
+  </div>
+
+  <header>
+    <div class="title-wrap">
+      <span style="font-size: 1.8rem;">🕯️</span>
+      <div>
+        <div class="brand-title">Casa de la Memoria</div>
+        <div class="subtitle">Honoring ancestral words with local, truthful open vision AI</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div id="memory-counter-badge" class="memory-counter">0 words remembered 🕯️</div>
+      <nav>
+        <button class="active" data-target="altar-upload-view">Place on Altar</button>
+        <button data-target="review-view">Read & Remember</button>
+        <button data-target="ofrenda-view">Altar Scrolls</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Place on Altar (Upload View) -->
+    <section id="altar-upload-view" class="view-section active">
+      <div class="altar-upload-deck" id="upload-deck">
+        <div class="altar-sweep-beam" id="altar-sweep-beam"></div>
+        <h2 style="color: var(--candle-gold); font-size: 1.8rem; margin-bottom: 0.5rem;">
+          Place a Handwriting Upon the Altar
+        </h2>
+        <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">
+          Lay down a late relative's recipe card or letter. The warm light will sweep across each line of ink, transcribing without ever sending private family words to the cloud.
+        </p>
+        <label for="file-input" class="upload-btn">Choose Recipe or Letter</label>
+        <input type="file" id="file-input" style="display: none;" accept="image/*">
+
+        <div id="upload-progress" style="display: none; margin-top: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+          <div style="background: rgba(0,0,0,0.5); height: 10px; border-radius: 5px; overflow: hidden; border: 1px solid var(--border-muted);">
+            <div id="progress-bar-fill" style="width: 0%; height: 100%; background: var(--marigold); transition: width 0.3s;"></div>
+          </div>
+          <p id="progress-text" style="font-size: 0.85rem; color: var(--candle-gold); margin-top: 0.75rem;"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Read & Remember (Review View) -->
+    <section id="review-view" class="view-section">
+      <div class="parchment-sheet" style="margin-top: 0; margin-bottom: 1.5rem;">
+        <h2 style="color: var(--ink); margin-bottom: 0.5rem;">Unrolled Parchment & Ink Verification</h2>
+        <p style="color: var(--ink-faded); font-size: 0.9rem; margin-bottom: 1.2rem;">
+          Words that the model was uncertain about glow like <strong>embers</strong>. When you verify and correct a word, a candle is lit beside it, keeping faith with the past.
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 250px;">
+            <label style="font-size: 0.8rem; color: var(--ink-faded); font-weight: 600;">Title</label>
+            <input type="text" id="parchment-title-input" class="parchment-input" placeholder="e.g. Abuela Rosa's Letter">
+          </div>
+          <div style="flex: 2; min-width: 300px;">
+            <label style="font-size: 0.8rem; color: var(--ink-faded); font-weight: 600;">Dedication / Notes</label>
+            <input type="text" id="parchment-notes-input" class="parchment-input" placeholder="e.g. Día de los Muertos, October 1987">
+          </div>
+          <div style="align-self: flex-end;">
+            <button onclick="saveParchment()" style="background: var(--marigold); color: #000; font-weight: 700; padding: 0.65rem 1.4rem; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px var(--marigold-glow);">
+              Roll & Save to Altar 📜
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="review-parchment-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Altar Scrolls (Ofrenda View) -->
+    <section id="ofrenda-view" class="view-section">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <h2 style="color: var(--candle-gold); font-size: 2rem; margin-bottom: 0.5rem;">The Altar Scrolls</h2>
+        <p style="color: #cbd5e1; max-width: 650px; margin: 0 auto; font-size: 0.95rem;">
+          Each preserved memory rests as a ribbon-tied scroll. Hover to lift it into the candlelight, and click to unroll the original image beside its transcript.
+        </p>
+      </div>
+
+      <div id="altar-scrolls-grid" class="altar-scrolls-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
