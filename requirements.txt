@@ -7,3 +7,6 @@ jiwer>=3.0.4
 python-multipart>=0.0.12
 pytest>=8.3.0
 numpy>=2.0.0
+opencv-python
+opencv-python-headless>=4.10.0.84
+pydantic
