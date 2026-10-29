@@ -10,60 +10,41 @@
   <body>
     <canvas id="petals-canvas" aria-hidden="true"></canvas>
     <div id="candles-container" aria-hidden="true"></div>
-
-    <div class="papel-picado-header" aria-hidden="true">
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
-      <span class="papel-flag"></span>
+    <div class="altar-shadows" aria-hidden="true">
+      <svg class="altar-skull skull-left" viewBox="0 0 80 90">
+        <path d="M40 7C20 7 7 21 7 40c0 13 7 22 17 28v10h10v-8h12v8h10V68c10-6 17-15 17-28C73 21 60 7 40 7Z" fill="currentColor"/>
+        <path d="M27 38a7 8 0 1 0 0 16 7 8 0 0 0 0-16Zm26 0a7 8 0 1 0 0 16 7 8 0 0 0 0-16ZM40 54l-5 10h10Z" fill="#1c1110"/>
+      </svg>
+      <svg class="altar-skull skull-right" viewBox="0 0 80 90">
+        <path d="M40 7C20 7 7 21 7 40c0 13 7 22 17 28v10h10v-8h12v8h10V68c10-6 17-15 17-28C73 21 60 7 40 7Z" fill="currentColor"/>
+        <path d="M27 38a7 8 0 1 0 0 16 7 8 0 0 0 0-16Zm26 0a7 8 0 1 0 0 16 7 8 0 0 0 0-16ZM40 54l-5 10h10Z" fill="#1c1110"/>
+      </svg>
     </div>
 
-    <header class="site-header">
+    <header class="altar-header">
       <a class="brand" href="/" aria-label="Casa de la Memoria home">
         <svg class="brand-candle" viewBox="0 0 32 40" aria-hidden="true">
-          <path d="M16 2c1.6 4.4 5.8 7.1 5.8 12.1A5.8 5.8 0 0 1 10.2 14C10.2 9.1 14 6.2 16 2Z" fill="url(#brand-flame)"/>
+          <path d="M16 2c1.6 4.4 5.8 7.1 5.8 12.1A5.8 5.8 0 0 1 10.2 14C10.2 9.1 14 6.2 16 2Z" fill="#efbd6c"/>
           <rect x="8.5" y="15" width="15" height="22" rx="3" fill="#eadbb8"/>
           <path d="M11 20v12" stroke="#fff6dc" stroke-width="1.5" stroke-linecap="round" opacity=".75"/>
-          <defs>
-            <radialGradient id="brand-flame" cx="50%" cy="75%" r="70%">
-              <stop offset="0" stop-color="#fff6d8"/>
-              <stop offset=".48" stop-color="#f5c667"/>
-              <stop offset="1" stop-color="#df8c39"/>
-            </radialGradient>
-          </defs>
         </svg>
-        <span class="brand-copy">
-          <span class="brand-title">Casa de la Memoria</span>
-          <span class="subtitle">A quiet place for handwritten memories</span>
-        </span>
+        <span>Casa de la Memoria</span>
       </a>
-
-      <div class="header-tools">
-        <div id="memory-counter-badge" class="memory-counter" aria-live="polite">
-          <svg viewBox="0 0 20 24" aria-hidden="true">
-            <path d="M10 1c1.2 3.3 4 5.3 4 9a4 4 0 0 1-8 0c0-3.5 2.8-5.8 4-9Z" fill="#edbd67"/>
-            <rect x="5.3" y="10" width="9.4" height="12" rx="2" fill="#f3e6c9"/>
-          </svg>
-          <span>0 words remembered</span>
-        </div>
-        <nav aria-label="Memory pages">
-          <button class="active" type="button" data-target="altar-upload-view" aria-pressed="true">Place a memory</button>
-          <button type="button" data-target="review-view" aria-pressed="false">Read &amp; remember</button>
-          <button type="button" data-target="ofrenda-view" aria-pressed="false">Saved memories</button>
-        </nav>
+      <div id="memory-counter-badge" class="memory-counter" aria-live="polite">
+        <svg viewBox="0 0 20 24" aria-hidden="true">
+          <path d="M10 1c1.2 3.3 4 5.3 4 9a4 4 0 0 1-8 0c0-3.5 2.8-5.8 4-9Z" fill="#edbd67"/>
+          <rect x="5.3" y="10" width="9.4" height="12" rx="2" fill="#f3e6c9"/>
+        </svg>
+        <span>0 words remembered</span>
       </div>
     </header>
 
     <main>
       <section id="altar-upload-view" class="view-section active" aria-labelledby="upload-title">
         <div class="page-intro">
-          <p class="eyebrow">A HOME FOR THE WORDS WE KEEP</p>
-          <h1>Some words deserve to be <em>remembered.</em></h1>
-          <p class="intro-copy">Lay a handwritten recipe or letter here. It stays on this device, held in the warm light of the altar.</p>
+          <p class="eyebrow">CASA DE LA MEMORIA <span aria-hidden="true">·</span> A FAMILY ARCHIVE</p>
+          <h1>For the words that <em>outlive us.</em></h1>
+          <p class="intro-copy">A recipe in a familiar hand. A letter folded and kept. Place a photograph here, and let its words be read with care.</p>
         </div>
 
         <div class="altar-upload-deck" id="upload-deck">
@@ -86,9 +67,9 @@
             </svg>
           </div>
           <div class="upload-content">
-            <p class="section-kicker">PLACE ON THE ALTAR</p>
-            <h2 id="upload-title">A page, kept close.</h2>
-            <p class="upload-description">Choose a photograph of a recipe card or letter. A gentle sweep of light will reveal each line as it is read.</p>
+            <p class="section-kicker">THE FIRST OFFERING</p>
+            <h2 id="upload-title">Begin with the original.</h2>
+            <p class="upload-description">Choose a clear photograph of a handwritten recipe or letter. The page stays here; its words are never made into someone else’s.</p>
             <label for="file-input" class="upload-btn">
               <svg viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M10 13V3m0 0L6.5 6.5M10 3l3.5 3.5M4 12v4.5h12V12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -117,15 +98,26 @@
           <span class="privacy-dot" aria-hidden="true"></span>
           Family words stay private on your device.
         </p>
+        <div id="upload-wayfinding" class="page-wayfinding" aria-label="Continue through the archive" hidden>
+          <span id="upload-wayfinding-label">Scroll down to the reading</span>
+          <button class="scroll-cue" type="button" data-scroll-target="review-view" aria-label="Scroll to the parchment reading">↓</button>
+        </div>
       </section>
 
       <section id="review-view" class="view-section" aria-labelledby="review-title">
         <div class="section-heading">
-          <p class="eyebrow">READ &amp; REMEMBER</p>
-          <h1 id="review-title">Give every word its light.</h1>
-          <p>Uncertain words glow softly. Select one to find it in the transcript, then correct the line. Each remembered word lights a candle.</p>
+          <p class="eyebrow">THE READING</p>
+          <h1 id="review-title">A page, carefully heard.</h1>
+          <p>When a page has been read, its line crops and transcription will rest here. You can correct every line before saving.</p>
         </div>
 
+        <p id="parchment-ready" class="parchment-ready" role="status" aria-live="polite" hidden>The parchment is ready. Unroll it to read and correct each line.</p>
+        <button id="unroll-review-button" class="unroll-button" type="button" aria-expanded="false" aria-controls="review-parchment-wrap" hidden>
+          <span class="unroll-mark" aria-hidden="true">⌄</span>
+          <span class="unroll-ribbon" aria-hidden="true"></span>
+          <span>Unroll the reading</span>
+        </button>
+        <div id="review-parchment-wrap" class="review-parchment-wrap" hidden>
         <div class="parchment-meta parchment-sheet">
           <div class="meta-intro">
             <p class="section-kicker">A MEMORY IN YOUR CARE</p>
@@ -137,8 +129,8 @@
               <input type="text" id="parchment-title-input" class="parchment-input" placeholder="A recipe, a letter, a name">
             </div>
             <div class="form-field">
-              <label for="parchment-notes-input">Dedication or notes</label>
-              <input type="text" id="parchment-notes-input" class="parchment-input" placeholder="A date, a place, or a small remembrance">
+              <label for="parchment-notes-input">Writer’s name or dedication</label>
+              <input type="text" id="parchment-notes-input" class="parchment-input" placeholder="Add a name, date, or small remembrance">
             </div>
             <button id="save-parchment-button" type="button" class="save-button">
               <span>Roll and place on the altar</span>
@@ -150,13 +142,18 @@
         </div>
 
         <div id="review-parchment-container" class="review-parchment-container"></div>
+        </div>
+        <div class="page-wayfinding" aria-label="Continue through the archive">
+          <span>Keep what matters</span>
+          <button class="scroll-cue" type="button" data-scroll-target="ofrenda-view" aria-label="Scroll to saved memories">↓</button>
+        </div>
       </section>
 
       <section id="ofrenda-view" class="view-section" aria-labelledby="ofrenda-title">
         <div class="section-heading">
-          <p class="eyebrow">KEPT WITH CARE</p>
-          <h1 id="ofrenda-title">Memories resting here.</h1>
-          <p>Each page is tied with ribbon. Open a scroll to sit with the original handwriting and the words you preserved.</p>
+          <p class="eyebrow">THE OFRENDA</p>
+          <h1 id="ofrenda-title">What we keep, stays near.</h1>
+          <p>Saved pages rest here under the title or dedication you gave them. Open a marker to see the original photograph and its transcript.</p>
         </div>
         <div id="altar-scrolls-grid" class="altar-scrolls-grid"></div>
       </section>
@@ -164,7 +161,7 @@
 
     <footer class="site-footer">
       <span class="footer-rule" aria-hidden="true"></span>
-      <p>Kept close. Kept in your hands.</p>
+      <p>Kept in this family. Kept with care.</p>
       <span class="footer-rule" aria-hidden="true"></span>
     </footer>
 

@@ -10,10 +10,12 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 
 document.addEventListener("DOMContentLoaded", () => {
   animationActive = !document.hidden;
+  document.body.classList.toggle("is-paused", !animationActive);
   setupVisibilityHandler();
   setupPetals();
   setupFloatingCandles();
   setupNavigation();
+  setupReviewUnroll();
   setupUpload();
   setupSaveButton();
   setupParallax();
@@ -36,25 +38,50 @@ function setupVisibilityHandler() {
 
 function setupPetals() {
   const canvas = document.getElementById("petals-canvas");
-  if (!canvas) return;
-
-  const context = canvas.getContext("2d", { alpha: true });
-  if (!context) return;
+  const context = canvas?.getContext("2d", { alpha: true });
+  if (!canvas || !context) return;
 
   let width = 0;
   let height = 0;
   let pixelRatio = 1;
-  const petalCount = reducedMotion ? 12 : Math.min(24, Math.max(14, Math.round(window.innerWidth / 58)));
-  const petals = Array.from({ length: petalCount }, () => ({
+  const count = reducedMotion ? 8 : Math.min(18, Math.max(12, Math.round(window.innerWidth / 75)));
+  const petals = Array.from({ length: count }, () => ({
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
-    size: 3 + Math.random() * 4,
-    speedY: 0.28 + Math.random() * 0.55,
-    speedX: -0.24 + Math.random() * 0.48,
+    size: 2.5 + Math.random() * 3,
+    speedX: -0.2 + Math.random() * 0.4,
+    speedY: 0.24 + Math.random() * 0.46,
     angle: Math.random() * Math.PI * 2,
-    angularSpeed: (Math.random() - 0.5) * 0.012,
-    color: Math.random() > 0.48 ? "#d88b3e" : "#e8b75f",
+    rotation: (Math.random() - 0.5) * 0.01,
+    color: Math.random() > 0.45 ? "#e69a42" : "#f0c776",
   }));
+
+  function draw(advance) {
+    context.clearRect(0, 0, width, height);
+    petals.forEach((petal) => {
+      if (advance) {
+        petal.x += petal.speedX;
+        petal.y += petal.speedY;
+        petal.angle += petal.rotation;
+        if (petal.y > height + 10) {
+          petal.y = -10;
+          petal.x = Math.random() * width;
+        }
+        if (petal.x < -10) petal.x = width + 10;
+        if (petal.x > width + 10) petal.x = -10;
+      }
+
+      context.save();
+      context.translate(petal.x, petal.y);
+      context.rotate(petal.angle);
+      context.globalAlpha = 0.48;
+      context.fillStyle = petal.color;
+      context.beginPath();
+      context.ellipse(0, 0, petal.size, petal.size * 0.55, 0, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
+    });
+  }
 
   function resize() {
     width = window.innerWidth;
@@ -63,53 +90,22 @@ function setupPetals() {
     canvas.width = Math.round(width * pixelRatio);
     canvas.height = Math.round(height * pixelRatio);
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-
-    if (reducedMotion) drawPetals(false);
+    if (reducedMotion) draw(false);
   }
 
-  function drawPetals(advance) {
-    context.clearRect(0, 0, width, height);
-
-    petals.forEach((petal) => {
-      if (advance) {
-        petal.x += petal.speedX;
-        petal.y += petal.speedY;
-        petal.angle += petal.angularSpeed;
-
-        if (petal.y > height + 12) {
-          petal.y = -12;
-          petal.x = Math.random() * width;
-        }
-        if (petal.x < -12) petal.x = width + 12;
-        if (petal.x > width + 12) petal.x = -12;
-      }
-
-      context.save();
-      context.translate(petal.x, petal.y);
-      context.rotate(petal.angle);
-      context.fillStyle = petal.color;
-      context.globalAlpha = 0.52;
-      context.beginPath();
-      context.ellipse(0, 0, petal.size, petal.size * 0.54, 0, 0, Math.PI * 2);
-      context.fill();
-      context.restore();
-    });
-  }
-
-  function animatePetals() {
+  function animate() {
     if (!animationActive) return;
-    drawPetals(!reducedMotion);
-    if (!reducedMotion) petalsFrameId = requestAnimationFrame(animatePetals);
+    draw(true);
+    petalsFrameId = requestAnimationFrame(animate);
   }
 
-  window.addEventListener("resize", resize);
-  petalsCanvasLoop = animatePetals;
+  window.addEventListener("resize", resize, { passive: true });
+  petalsCanvasLoop = animate;
   resize();
-
   if (reducedMotion) {
-    drawPetals(false);
+    draw(false);
   } else if (animationActive) {
-    petalsFrameId = requestAnimationFrame(animatePetals);
+    petalsFrameId = requestAnimationFrame(animate);
   }
 }
 
@@ -181,27 +177,30 @@ function setupParallax() {
 }
 
 function setupNavigation() {
-  const tabs = document.querySelectorAll("nav button[data-target]");
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      showView(tab.dataset.target);
+  document.querySelectorAll("[data-scroll-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      showView(button.dataset.scrollTarget);
     });
   });
 }
 
 function showView(targetId) {
-  document.querySelectorAll("nav button[data-target]").forEach((tab) => {
-    const active = tab.dataset.target === targetId;
-    tab.classList.toggle("active", active);
-    tab.setAttribute("aria-pressed", String(active));
-  });
-
-  document.querySelectorAll(".view-section").forEach((section) => {
-    section.classList.toggle("active", section.id === targetId);
-  });
-
+  const section = document.getElementById(targetId);
+  section?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
   if (targetId === "ofrenda-view") loadOfrenda();
+}
+
+function setupReviewUnroll() {
+  const button = document.getElementById("unroll-review-button");
+  const wrap = document.getElementById("review-parchment-wrap");
+  if (!button || !wrap) return;
+  button.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    button.querySelector("span:last-child").textContent = isOpen ? "Unroll the reading" : "Roll the reading";
+    wrap.hidden = isOpen;
+    wrap.classList.toggle("is-unrolled", !isOpen);
+  });
 }
 
 function setupUpload() {
@@ -264,6 +263,17 @@ async function handleUpload(file) {
   const sweepBeam = document.getElementById("altar-sweep-beam");
   const progressBox = document.getElementById("upload-progress");
   const uploadDeck = document.getElementById("upload-deck");
+  const readyMessage = document.getElementById("parchment-ready");
+  const unrollButton = document.getElementById("unroll-review-button");
+  const parchmentWrap = document.getElementById("review-parchment-wrap");
+  const wayfinding = document.getElementById("upload-wayfinding");
+  if (readyMessage) readyMessage.hidden = true;
+  if (wayfinding) wayfinding.hidden = true;
+  if (unrollButton) {
+    unrollButton.hidden = true;
+    unrollButton.setAttribute("aria-expanded", "false");
+  }
+  if (parchmentWrap) parchmentWrap.hidden = true;
 
   showUploadPreview(file);
   if (progressBox) progressBox.hidden = false;
@@ -308,7 +318,7 @@ async function pollStatus(pageId) {
         if (sweepBeam) sweepBeam.classList.remove("active");
         if (uploadDeck) uploadDeck.classList.remove("is-processing");
         await wait(240);
-        await loadPageReview(pageId);
+        await loadPageReview(pageId, { scrollIntoView: false });
         return;
       }
 
@@ -325,7 +335,7 @@ async function pollStatus(pageId) {
   }
 }
 
-async function loadPageReview(pageId) {
+async function loadPageReview(pageId, { scrollIntoView = true } = {}) {
   const response = await fetch(`/api/page/${encodeURIComponent(pageId)}`);
   if (!response.ok) {
     showToast("This page is not ready to review yet.");
@@ -335,7 +345,24 @@ async function loadPageReview(pageId) {
   const pageData = await response.json();
   activePageId = pageId;
   renderReviewParchment(pageData);
-  showView("review-view");
+  const readyMessage = document.getElementById("parchment-ready");
+  const unrollButton = document.getElementById("unroll-review-button");
+  const parchmentWrap = document.getElementById("review-parchment-wrap");
+  if (readyMessage) readyMessage.hidden = false;
+  const wayfinding = document.getElementById("upload-wayfinding");
+  const wayfindingLabel = document.getElementById("upload-wayfinding-label");
+  if (wayfinding) wayfinding.hidden = false;
+  if (wayfindingLabel) wayfindingLabel.textContent = "The reading is ready just below";
+  if (unrollButton) {
+    unrollButton.hidden = false;
+    unrollButton.setAttribute("aria-expanded", "false");
+  }
+  if (parchmentWrap) {
+    parchmentWrap.hidden = true;
+    parchmentWrap.classList.remove("is-unrolled");
+  }
+  showToast("The parchment is ready. Unroll it to read and correct each line.");
+  if (scrollIntoView) showView("review-view");
 }
 
 function renderReviewParchment(pageData) {
@@ -383,7 +410,7 @@ function renderReviewParchment(pageData) {
     const lineHeading = document.createElement("div");
     lineHeading.className = "line-heading";
     const lineLabel = document.createElement("span");
-    lineLabel.textContent = `LINE ${String(line.line_index).padStart(2, "0")}`;
+    lineLabel.textContent = `LINE ${String(line.line_index).padStart(2, "0")} · PREDICTED`;
     lineHeading.appendChild(lineLabel);
 
     if (line.word_count_divergence) {
@@ -517,7 +544,7 @@ async function saveParchment() {
     return;
   }
 
-  const title = document.getElementById("parchment-title-input").value.trim() || "Ancestral Memory";
+  const title = document.getElementById("parchment-title-input").value.trim() || "Untitled page";
   const notes = document.getElementById("parchment-notes-input").value.trim();
   const corrections = Array.from(document.querySelectorAll(".line-correction-input")).map((input) => ({
     line_index: Number.parseInt(input.dataset.lineIndex, 10),
@@ -579,11 +606,14 @@ function createScrollCard(item) {
   rolled.className = "rolled-scroll";
   rolled.type = "button";
   rolled.setAttribute("aria-expanded", "false");
-  rolled.setAttribute("aria-label", `Unroll ${item.title || "saved memory"}`);
+  rolled.setAttribute("aria-label", `Open saved memory: ${item.title || "untitled page"}`);
 
+  const dedication = document.createElement("h2");
+  dedication.className = "tombstone-dedication";
+  dedication.textContent = item.notes || "A page kept close.";
   const title = document.createElement("span");
   title.className = "scroll-title";
-  title.textContent = item.title || "Ancestral Memory";
+  title.textContent = item.title || "Untitled page";
 
   const ribbon = document.createElement("span");
   ribbon.className = "scroll-ribbon";
@@ -634,7 +664,7 @@ function createScrollCard(item) {
     }
   });
 
-  wrapper.append(rolled, sheet);
+  wrapper.append(dedication, rolled, sheet);
   return wrapper;
 }
 
@@ -664,7 +694,7 @@ function buildScrollContent(item, page) {
 
   const headingGroup = document.createElement("div");
   const heading = document.createElement("h2");
-  heading.textContent = item.title || "Ancestral Memory";
+  heading.textContent = item.title || "Untitled page";
   const notes = document.createElement("p");
   notes.textContent = item.notes || "A page kept close.";
   headingGroup.append(heading, notes);
