@@ -772,20 +772,20 @@ main {
 
 .review-parchment-container {
   display: grid;
-  gap: 14px;
+  gap: 10px;
 }
 
 .parchment-line {
   display: grid;
-  grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.6fr);
+  grid-template-columns: minmax(170px, 0.65fr) minmax(0, 1.7fr);
   align-items: center;
-  gap: 20px;
-  padding: 15px;
+  gap: 14px;
+  padding: 8px 12px;
   border: 1px solid #d7c7a7;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--paper-light);
   color: var(--ink);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .parchment-line.flagged {
@@ -815,13 +815,13 @@ main {
 
 .crop-preview-box {
   display: flex;
-  min-height: 105px;
+  min-height: 58px;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 10px;
+  padding: 5px 8px;
   border: 1px solid #d6c5a1;
-  border-radius: 7px;
+  border-radius: 6px;
   background:
     linear-gradient(rgba(255, 249, 233, 0.84), rgba(255, 249, 233, 0.84)),
     repeating-linear-gradient(0deg, transparent 0 19px, rgba(123, 98, 64, 0.1) 20px);
@@ -830,7 +830,7 @@ main {
 .crop-preview-box img {
   display: block;
   max-width: 100%;
-  max-height: 112px;
+  max-height: 64px;
   object-fit: contain;
 }
 
@@ -842,47 +842,50 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 10px;
+  margin-bottom: 4px;
   color: #77664f;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.04em;
 }
 
 .line-divergence {
-  padding: 2px 7px;
+  padding: 1px 6px;
   border: 1px solid #d4ae70;
   border-radius: 999px;
   color: #754d27;
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   letter-spacing: 0;
 }
 
 .words-row {
   display: flex;
-  min-height: 36px;
+  min-height: 28px;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 8px;
+  gap: 5px;
+  margin-bottom: 5px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: rgba(45, 34, 28, 0.08);
 }
 
 .plain-word,
 .ember-word {
   display: inline-flex;
-  min-height: 28px;
+  min-height: 24px;
   align-items: center;
-  padding: 3px 7px;
-  border-radius: 5px;
+  padding: 2px 6px;
+  border-radius: 4px;
   color: #514639;
-  font-size: 0.84rem;
-  line-height: 1.3;
+  font-size: 0.82rem;
+  line-height: 1.25;
 }
 
 .ember-word {
   gap: 4px;
   border: 1px solid rgba(169, 78, 61, 0.58);
-  background: rgba(169, 78, 61, 0.1);
+  background: rgba(169, 78, 61, 0.12);
   color: #7a3028;
   cursor: pointer;
   font-weight: 600;
@@ -935,7 +938,9 @@ main {
 }
 
 .line-correction-input {
-  min-height: 42px;
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
 }
 
 .empty-review {
@@ -948,13 +953,21 @@ main {
 
 .altar-scrolls-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   align-items: start;
   gap: 20px;
 }
 
 .scroll-wrapper {
+  display: grid;
+  justify-items: center;
   min-width: 0;
+  width: 100%;
+}
+
+.scroll-wrapper.is-open {
+  grid-column: 1 / -1;
+  width: 100%;
 }
 
 .rolled-scroll {
@@ -1042,8 +1055,9 @@ main {
 
 .scroll-sheet {
   display: none;
-  margin-top: 12px;
-  padding: 20px;
+  width: min(100%, 1020px);
+  margin-top: 14px;
+  padding: clamp(18px, 4vw, 36px);
   transform: scaleY(0.2);
   transform-origin: top center;
   opacity: 0;
@@ -1060,20 +1074,22 @@ main {
   align-items: flex-start;
   justify-content: space-between;
   gap: 15px;
-  margin-bottom: 16px;
+  margin-bottom: clamp(14px, 2.5vw, 22px);
 }
 
 .scroll-sheet-header h2 {
   margin: 0;
   color: var(--ink);
-  font-size: 1.25rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .scroll-sheet-header p {
-  margin: 3px 0 0;
+  margin: 4px 0 0;
   color: var(--ink-soft);
-  font-size: 0.77rem;
+  font-size: clamp(0.78rem, 1.4vw, 0.95rem);
+  line-height: 1.45;
 }
 
 .memory-state {
@@ -1089,8 +1105,9 @@ main {
 
 .scroll-memory-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.35fr);
+  gap: clamp(14px, 2.5vw, 26px);
+  align-items: start;
 }
 
 .memory-photo {
@@ -1101,7 +1118,7 @@ main {
 .memory-photo img {
   display: block;
   width: 100%;
-  max-height: 440px;
+  max-height: clamp(340px, 48vh, 520px);
   border: 1px solid #d0bd97;
   border-radius: 7px;
   background: #eee3cd;
@@ -1111,46 +1128,59 @@ main {
 .memory-photo figcaption {
   margin-top: 6px;
   color: var(--ink-soft);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
 }
 
 .memory-transcript {
   min-width: 0;
-  padding: 14px;
+  padding: clamp(10px, 2vw, 16px);
   border: 1px solid #dfd0b2;
-  border-radius: 7px;
+  border-radius: 8px;
   background: rgba(255, 253, 246, 0.53);
 }
 
 .memory-transcript h3 {
-  margin: 0 0 9px;
+  margin: 0 0 10px;
   color: #6b5335;
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .memory-line {
   display: grid;
-  grid-template-columns: 24px 1fr;
-  gap: 8px;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(137, 112, 77, 0.17);
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+  padding: 4px 10px;
+  margin-bottom: 5px;
+  border: 1px solid rgba(137, 112, 77, 0.22);
+  border-radius: 5px;
+  background: rgba(45, 34, 28, 0.08);
   color: var(--ink);
-  font-size: 0.84rem;
-  line-height: 1.55;
+  font-size: clamp(0.82rem, 1.15vw, 0.95rem);
+  line-height: 1.4;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  transition: background 180ms ease, border-color 180ms ease;
 }
 
 .memory-line:last-child {
-  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+.memory-line:hover {
+  background: rgba(45, 34, 28, 0.14);
+  border-color: rgba(137, 112, 77, 0.38);
 }
 
 .memory-line-number {
-  color: #907549;
-  font-size: 0.68rem;
+  color: #8b6838;
+  font-size: 0.7rem;
+  font-weight: 600;
   text-align: right;
+  opacity: 0.85;
 }
 
 .scroll-actions {
@@ -1837,6 +1867,12 @@ main {
   display: grid;
   justify-items: center;
   min-width: 0;
+  width: 100%;
+}
+
+.scroll-wrapper.is-open {
+  grid-column: 1 / -1;
+  width: 100%;
 }
 
 .tombstone-dedication {
@@ -1908,9 +1944,9 @@ main {
 }
 
 .scroll-sheet {
-  width: 100%;
-  margin-top: 20px;
-  padding: clamp(16px, 3vw, 23px);
+  width: min(100%, 1020px);
+  margin-top: 24px;
+  padding: clamp(18px, 4vw, 36px);
   transform: scaleY(0.92);
 }
 
@@ -1920,10 +1956,27 @@ main {
 
 .scroll-sheet-header h2 {
   color: #30251d;
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+}
+
+.scroll-sheet-header p {
+  font-size: clamp(0.78rem, 1.4vw, 0.95rem);
 }
 
 .memory-transcript {
   background: rgba(255, 253, 246, 0.67);
+  padding: clamp(10px, 2vw, 16px);
+}
+
+.memory-line {
+  min-height: 28px;
+  padding: 4px 10px;
+  margin-bottom: 5px;
+  border: 1px solid rgba(137, 112, 77, 0.22);
+  border-radius: 5px;
+  background: rgba(45, 34, 28, 0.08);
+  font-size: clamp(0.82rem, 1.15vw, 0.95rem);
+  line-height: 1.4;
 }
 
 .empty-state {
